@@ -35,9 +35,9 @@ final class ModelType
     }
 
     /**
-     * @return mixed The value of the attribute converted to the type specified by PHPDoc.
-     *
      * @param mixed $value The value to be converted.
+     *
+     * @return mixed The value of the attribute converted to the type specified by PHPDoc.
      */
     public function phpTypeCast(string $name, mixed $value): mixed
     {

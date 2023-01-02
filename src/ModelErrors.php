@@ -54,9 +54,9 @@ final class ModelErrors
     }
 
     /**
-     * @return array The errors for an attribute with a given name.
-     *
      * @param string $attribute The attribute name.
+     *
+     * @return array The errors for an attribute with a given name.
      *
      * @psalm-return string[]
      */
