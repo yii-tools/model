@@ -14,16 +14,17 @@
         <ini name="error_reporting" value="-1" />
     </php>
 
-    <coverage processUncoveredFiles="true">
+    <coverage>
         <include>
-            <directory suffix=".php">packages/*/src</directory>
+            <directory suffix=".php">./src</directory>
         </include>
+        <exclude>
+            <directory suffix=".php">./src/FormModelInterface.php</directory>
+            <directory suffix=".php">./src/ModelInterface.php</directory>
+        </exclude>
     </coverage>
 
     <testsuites>
-        <testsuite name="filament">
-            <directory>./packages/*/tests</directory>
-        </testsuite>
         <testsuite name="Model">
             <directory>./tests</directory>
         </testsuite>
