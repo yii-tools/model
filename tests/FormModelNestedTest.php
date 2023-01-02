@@ -16,36 +16,43 @@ final class FormModelNestedTest extends TestCase
     public function testgetRawDataNotNestedException(): void
     {
         $formModel = new Nested();
+
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Attribute "profile" is not a nested attribute.');
+
         $formModel->getAttributeValue('profile.user');
     }
 
     public function testgetAttributeValueUndefinedPropertyException(): void
     {
         $formModel = new Nested();
+
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
             'Undefined property: "Yii\Model\Tests\TestSupport\FormModel\Login::noExist'
         );
+
         $formModel->getAttributeValue('user.noExist');
     }
 
     public function testGetHint(): void
     {
         $formModel = new Nested();
+
         $this->assertSame('Write your id or email.', $formModel->getHint('user.login'));
     }
 
     public function testGetLabel(): void
     {
         $formModel = new Nested();
+
         $this->assertSame('Login:', $formModel->getLabel('user.login'));
     }
 
     public function testGetPlaceHolder(): void
     {
         $formModel = new Nested();
+
         $this->assertSame('Write Username or Email.', $formModel->getPlaceHolder('user.login'));
     }
 
@@ -65,12 +72,14 @@ final class FormModelNestedTest extends TestCase
         $this->expectExceptionMessage(
             'Undefined property: "Yii\Model\Tests\TestSupport\FormModel\Login::noExist'
         );
+
         $form->has('user.noExist');
     }
 
     public function testLoadPublicField(): void
     {
         $formModel = new Nested();
+
         $this->assertEmpty($formModel->getAttributeValue('user.login'));
         $this->assertEmpty($formModel->getAttributeValue('user.password'));
 

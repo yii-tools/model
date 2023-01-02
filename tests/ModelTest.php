@@ -52,6 +52,7 @@ final class ModelTest extends TestCase
         $this->assertSame('', $model->getFormName());
 
         $model = new NonNamespaced();
+
         $this->assertSame('NonNamespaced', $model->getFormName());
     }
 
@@ -122,6 +123,7 @@ final class ModelTest extends TestCase
         $model = new Model();
         $model->setValue('login', 'test');
         $model->setValue('password', 'test');
+
         $this->assertSame('test', $model->getAttributeValue('login'));
         $this->assertSame('test', $model->getAttributeValue('password'));
     }

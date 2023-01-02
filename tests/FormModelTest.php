@@ -85,6 +85,13 @@ final class FormModelTest extends TestCase
         $this->assertSame([], $formModel->getHints());
     }
 
+    public function testGetInputId(): void
+    {
+        $formModel = new Login();
+
+        $this->assertSame('login-login', $formModel->getInputId('login'));
+    }
+
     /**
      * @dataProvider \Yii\Model\Tests\Provider\FormModelProvider::getInputName()
      */

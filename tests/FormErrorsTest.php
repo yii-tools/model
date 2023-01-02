@@ -71,6 +71,16 @@ final class FormErrorsTest extends TestCase
     public function testGet(): void
     {
         $formModel = new Login();
+        $formModel->error()->add('login', 'Login is required.');
+        $formModel->error()->add('password', 'Password is required.');
+
+        $this->assertSame(['Login is required.'], $formModel->error()->get('login'));
+        $this->assertSame(['Password is required.'], $formModel->error()->get('password'));
+    }
+
+    public function testGetWithEmpty(): void
+    {
+        $formModel = new Login();
 
         $this->assertSame([], $formModel->error()->get('password'));
     }
@@ -123,8 +133,10 @@ final class FormErrorsTest extends TestCase
     public function testGetSummaryOnlyAttributes(): void
     {
         $formModel = new Login();
+
         $formModel->error()->add('login', 'This value is not a valid email address.');
         $formModel->error()->add('password', 'Is too short.');
+
         $this->assertSame(
             ['This value is not a valid email address.'],
             $formModel->error()->getSummary(['login']),
@@ -138,6 +150,13 @@ final class FormErrorsTest extends TestCase
     public function testHas(): void
     {
         $formModel = new Login();
-        $this->assertSame(false, $formModel->error()->has('password'));
+
+        $formModel->error()->add('login', 'Login is required.');
+        $formModel->error()->add('password', 'Password is required.');
+
+        $this->assertTrue($formModel->error()->has());
+        $this->assertTrue($formModel->error()->has('login'));
+        $this->assertTrue($formModel->error()->has('password'));
+        $this->assertFalse($formModel->error()->has('email'));
     }
 }
