@@ -22,7 +22,7 @@ abstract class AbstractModel implements ModelInterface
     private array $data = [];
     private ModelErrors|null $errors = null;
     private Inflector|null $inflector = null;
-    private ModelType $modelTypes;
+    private readonly ModelType $modelTypes;
 
     public function __construct()
     {
@@ -185,11 +185,9 @@ abstract class AbstractModel implements ModelInterface
         }
 
         /** @psalm-suppress MixedMethodCall */
-        $getter = static function (ModelInterface $class, string $attribute, string|null $nested): mixed {
-            return match ($nested) {
-                null => $class->$attribute,
-                default => $class->$attribute->getAttributeValue($nested),
-            };
+        $getter = static fn (ModelInterface $class, string $attribute, string|null $nested): mixed => match ($nested) {
+            null => $class->$attribute,
+            default => $class->$attribute->getAttributeValue($nested),
         };
 
         $getter = Closure::bind($getter, null, $this);

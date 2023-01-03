@@ -57,7 +57,7 @@ final class ModelType
                 'string' => (string) $value,
                 default => $value,
             };
-        } catch (Exception $e) {
+        } catch (Exception) {
             throw new InvalidArgumentException(
                 sprintf('The value is not of type "%s".', (string) $this->attributes[$name])
             );

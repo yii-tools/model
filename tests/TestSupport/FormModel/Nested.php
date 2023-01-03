@@ -9,7 +9,7 @@ use Yii\Model\AbstractFormModel;
 final class Nested extends AbstractFormModel
 {
     private int|null $id = null;
-    private Login $user;
+    private readonly Login $user;
 
     public function __construct()
     {
