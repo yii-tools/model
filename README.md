@@ -2,7 +2,7 @@
     <a href="https://github.com/yii-tools/filament" target="_blank">
         <img src="https://avatars.githubusercontent.com/u/121752654?s=200&v=4" height="100px">
     </a>
-    <h1 align="center">Model for Yii 3.</h1>
+    <h1 align="center">Model.</h1>
     <br>
 </p>
 
@@ -10,6 +10,16 @@
 
 ```shell
 composer require yii-tools/model
+```
+
+### Composer require checker
+
+This package uses [composer-require-checker](https://github.com/maglnet/ComposerRequireChecker) to check if all dependencies are correctly defined in `composer.json`.
+
+To run the checker, execute the following command:
+
+```shell
+./vendor/bin/composer-require-checker
 ```
 
 ## Mutation testing
