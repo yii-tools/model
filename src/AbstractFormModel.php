@@ -8,8 +8,8 @@ use InvalidArgumentException;
 use Yiisoft\Strings\StringHelper;
 
 use function mb_strtolower;
-use function str_replace;
 use function preg_match;
+use function str_replace;
 
 abstract class AbstractFormModel extends AbstractModel implements FormModelInterface
 {
