@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <phpunit
-    bootstrap="vendor/autoload.php"
-    colors="true"
-    convertErrorsToExceptions="true"
-    convertNoticesToExceptions="true"
-    convertWarningsToExceptions="true"
-    stopOnFailure="false"
-    verbose="true"
+  bootstrap="vendor/autoload.php"
+  colors="true"
+  convertErrorsToExceptions="true"
+  convertNoticesToExceptions="true"
+  convertWarningsToExceptions="true"
+  stopOnFailure="false"
+  verbose="true"
 >
 
-    <php>
-        <ini name="error_reporting" value="-1" />
-    </php>
+  <php>
+    <ini name="error_reporting" value="-1" />
+  </php>
 
-    <coverage>
-        <include>
-            <directory suffix=".php">./src</directory>
-        </include>
-        <exclude>
-            <directory suffix=".php">./src/FormModelInterface.php</directory>
-            <directory suffix=".php">./src/ModelInterface.php</directory>
-        </exclude>
-    </coverage>
+  <coverage>
+    <include>
+      <directory suffix=".php">./src</directory>
+    </include>
+    <exclude>
+      <directory suffix=".php">./src/FormModelInterface.php</directory>
+      <directory suffix=".php">./src/ModelInterface.php</directory>
+    </exclude>
+  </coverage>
 
-    <testsuites>
-        <testsuite name="Model">
-            <directory>./tests</directory>
-        </testsuite>
-    </testsuites>
+  <testsuites>
+    <testsuite name="Model">
+      <directory>./tests</directory>
+    </testsuite>
+  </testsuites>
 </phpunit>
