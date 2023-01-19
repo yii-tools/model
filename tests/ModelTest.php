@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Yii\Model\Tests;
 
+use InvalidArgumentException;
 use NonNamespaced;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 use Yii\Model\AbstractModel;
 use Yii\Model\Tests\TestSupport\Model\Model;
+use Yii\Model\Tests\TestSupport\Model\PropertyType;
 
 require __DIR__ . '/TestSupport/Model/NonNamespaced.php';
 
@@ -25,11 +28,44 @@ final class ModelTest extends TestCase
 
     public function testGetAttributeValue(): void
     {
-        $model = new Model();
+        $model = new PropertyType();
 
-        $this->assertTrue($model->load(['Model' => ['login' => 'test', 'password' => 'test']]));
-        $this->assertSame('test', $model->getAttributeValue('login'));
-        $this->assertSame('test', $model->getAttributeValue('password'));
+        $model->setValue('array', [1, 2]);
+
+        $this->assertIsArray($model->getAttributeValue('array'));
+        $this->assertSame([1, 2], $model->getAttributeValue('array'));
+
+        $model->setValue('bool', true);
+
+        $this->assertIsBool($model->getAttributeValue('bool'));
+        $this->assertSame(true, $model->getAttributeValue('bool'));
+
+        $model->setValue('float', 1.2023);
+
+        $this->assertIsFloat($model->getAttributeValue('float'));
+        $this->assertSame(1.2023, $model->getAttributeValue('float'));
+
+        $model->setValue('int', 1);
+
+        $this->assertIsInt($model->getAttributeValue('int'));
+        $this->assertSame(1, $model->getAttributeValue('int'));
+
+        $model->setValue('object', new stdClass());
+
+        $this->assertIsObject($model->getAttributeValue('object'));
+        $this->assertInstanceOf(stdClass::class, $model->getAttributeValue('object'));
+
+        $model->setValue('string', 'samdark');
+
+        $this->assertIsString($model->getAttributeValue('string'));
+        $this->assertSame('samdark', $model->getAttributeValue('string'));
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            'Undefined property: "Yii\Model\Tests\TestSupport\Model\PropertyType::noExist".'
+        );
+
+        $model->getAttributeValue('noExist');
     }
 
     public function testGetData(): void
@@ -118,7 +154,7 @@ final class ModelTest extends TestCase
         $this->assertIsString($model->getAttributeValue('string'));
     }
 
-    public function testSet(): void
+    public function testSetValue(): void
     {
         $model = new Model();
         $model->setValue('login', 'test');
@@ -126,5 +162,58 @@ final class ModelTest extends TestCase
 
         $this->assertSame('test', $model->getAttributeValue('login'));
         $this->assertSame('test', $model->getAttributeValue('password'));
+    }
+
+    public function testSetValues(): void
+    {
+        $model = new PropertyType();
+
+        // setValue attributes with array and to camel case disabled.
+        $model->setValues(
+            [
+                'array' => [],
+                'bool' => false,
+                'float' => 1.434536,
+                'int' => 1,
+                'object' => new stdClass(),
+                'string' => '',
+            ],
+        );
+
+        $this->assertIsArray($model->getAttributeValue('array'));
+        $this->assertIsBool($model->getAttributeValue('bool'));
+        $this->assertIsFloat($model->getAttributeValue('float'));
+        $this->assertIsInt($model->getAttributeValue('int'));
+        $this->assertIsObject($model->getAttributeValue('object'));
+        $this->assertIsString($model->getAttributeValue('string'));
+
+        // setValue attributes with array and to camel case enabled.
+        $model->setValues(
+            [
+                'array' => [],
+                'bool' => 'false',
+                'float' => '1.434536',
+                'int' => '1',
+                'object' => new stdClass(),
+                'string' => '',
+            ],
+        );
+
+        $this->assertIsArray($model->getAttributeValue('array'));
+        $this->assertIsBool($model->getAttributeValue('bool'));
+        $this->assertIsFloat($model->getAttributeValue('float'));
+        $this->assertIsInt($model->getAttributeValue('int'));
+        $this->assertIsObject($model->getAttributeValue('object'));
+        $this->assertIsString($model->getAttributeValue('string'));
+    }
+
+    public function testSetValuesException(): void
+    {
+        $model = new PropertyType();
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Attribute "noExist" does not exist');
+
+        $model->setValues(['noExist' => []]);
     }
 }

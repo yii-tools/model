@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Yii\Model\Tests\TestSupport\FormModel;
+namespace Yii\Model\Tests\TestSupport\Model;
 
-use Yii\Model\AbstractFormModel;
+use Yii\Model\AbstractModel;
 
-final class PropertyType extends AbstractFormModel
+final class PropertyType extends AbstractModel
 {
     private array $array = [];
     private bool $bool = false;

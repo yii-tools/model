@@ -20,7 +20,6 @@ use function substr;
 abstract class AbstractModel implements ModelInterface
 {
     private array $data = [];
-    private ModelErrors|null $errors = null;
     private Inflector|null $inflector = null;
     private readonly ModelType $modelTypes;
 
@@ -34,15 +33,11 @@ abstract class AbstractModel implements ModelInterface
         return array_keys($this->modelTypes->attributes());
     }
 
-    public function error(): ModelErrors
-    {
-        if ($this->errors === null) {
-            $this->errors = new ModelErrors();
-        }
-
-        return $this->errors;
-    }
-
+    /**
+     * @param string $attribute
+     *
+     * @return mixed The value (raw data) for the specified attribute.
+     */
     public function getAttributeValue(string $attribute): mixed
     {
         return $this->readProperty($attribute);
@@ -53,6 +48,25 @@ abstract class AbstractModel implements ModelInterface
         return $this->data;
     }
 
+    /**
+     * Returns the form name that this model class should use.
+     *
+     * The form name is mainly used by {@see Model} to determine how to name the input fields for the attributes in a
+     * model.
+     *
+     * If the form name is "A" and an attribute name is "b", then the corresponding input name would be "A[b]".
+     * If the form name is an empty string, then the input name would be "b".
+     *
+     * The purpose of the above naming schema is that for forms which contain multiple different models, the attributes
+     * of each model are grouped in sub-arrays of the POST-data, and it is easier to differentiate between them.
+     *
+     * By default, this method returns the model class name (without the namespace part) as the form name. You may
+     * override it when the model is used in different forms.
+     *
+     * @return string The form name class, without a namespace part or empty string when class is anonymous.
+     *
+     * {@see load()}
+     */
     public function getFormName(): string
     {
         if (str_contains(static::class, '@anonymous')) {
@@ -68,6 +82,13 @@ abstract class AbstractModel implements ModelInterface
         return substr($className, 1);
     }
 
+    /**
+     * If there is such attribute in the set.
+     *
+     * @param string $attribute
+     *
+     * @return bool
+     */
     public function has(string $attribute): bool
     {
         [$attribute, $nested] = $this->getNested($attribute);
@@ -75,6 +96,9 @@ abstract class AbstractModel implements ModelInterface
         return $nested !== null || array_key_exists($attribute, $this->modelTypes->attributes());
     }
 
+    /**
+     * Whether the form model is empty.
+     */
     public function isEmpty(): bool
     {
         return $this->data === [];
@@ -127,28 +151,12 @@ abstract class AbstractModel implements ModelInterface
         return $this->modelTypes;
     }
 
-    protected function getInflector(): Inflector
+    private function getInflector(): Inflector
     {
         return match (empty($this->inflector)) {
             true => $this->inflector = new Inflector(),
             false => $this->inflector,
         };
-    }
-
-    protected function getNestedValue(string $method, string $attribute): string
-    {
-        $result = '';
-
-        [$attribute, $nested] = $this->getNested($attribute);
-
-        if ($nested !== null) {
-            /** @psalm-var ModelInterface $attributeNestedValue */
-            $attributeNestedValue = $this->getAttributeValue($attribute);
-            /** @psalm-var string $result */
-            $result = $attributeNestedValue->$method($nested);
-        }
-
-        return $result;
     }
 
     /**

@@ -6,7 +6,7 @@ namespace Yii\Model\Tests;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Yii\Model\Tests\TestSupport\FormModel\PropertyType;
+use Yii\Model\Tests\TestSupport\Model\PropertyType;
 
 /**
  * @psalm-suppress PropertyNotSetInConstructor

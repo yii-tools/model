@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Yii\Model\Tests\TestSupport\FormModel;
+namespace Yii\Model\Tests\TestSupport\Model;
 
-use Yii\Model\AbstractFormModel;
+use Yii\Model\AbstractModel;
 
-final class Nested extends AbstractFormModel
+final class Nested extends AbstractModel
 {
     private int|null $id = null;
     private readonly Login $user;
