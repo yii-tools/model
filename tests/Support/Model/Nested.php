@@ -2,12 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Yii\Model\Tests\TestSupport\Model;
+namespace Yii\Model\Tests\Support\Model;
 
 use Yii\Model\AbstractModel;
+use Yii\Model\Tests\Support\HasHint;
 
 final class Nested extends AbstractModel
 {
+    use HasHint;
+
     private int|null $id = null;
     private readonly Login $user;
 

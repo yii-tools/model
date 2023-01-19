@@ -151,6 +151,28 @@ abstract class AbstractModel implements ModelInterface
         return $this->modelTypes;
     }
 
+    /**
+     * @return string The valued nested attribute.
+     */
+    protected function getNestedValue(string $method, string $attribute): string
+    {
+        $result = '';
+
+        [$attribute, $nested] = $this->getNested($attribute);
+
+        if ($nested !== null) {
+            /** @psalm-var ModelInterface $attributeNestedValue */
+            $attributeNestedValue = $this->getAttributeValue($attribute);
+            /** @psalm-var string $result */
+            $result = $attributeNestedValue->$method($nested);
+        }
+
+        return $result;
+    }
+
+    /**
+     * @return Inflector The inflector instance.
+     */
     private function getInflector(): Inflector
     {
         return match (empty($this->inflector)) {

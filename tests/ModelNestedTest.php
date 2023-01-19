@@ -6,7 +6,7 @@ namespace Yii\Model\Tests;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Yii\Model\Tests\TestSupport\Model\Nested;
+use Yii\Model\Tests\Support\Model\Nested;
 
 /**
  * @psalm-suppress PropertyNotSetInConstructor
@@ -29,7 +29,7 @@ final class ModelNestedTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
-            'Undefined property: "Yii\Model\Tests\TestSupport\Model\Login::noExist'
+            'Undefined property: "Yii\Model\Tests\Support\Model\Login::noExist'
         );
 
         $model->getAttributeValue('user.noExist');
@@ -49,7 +49,7 @@ final class ModelNestedTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
-            'Undefined property: "Yii\Model\Tests\TestSupport\Model\Login::noExist'
+            'Undefined property: "Yii\Model\Tests\Support\Model\Login::noExist'
         );
 
         $model->has('user.noExist');

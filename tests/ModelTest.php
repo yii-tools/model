@@ -9,10 +9,11 @@ use NonNamespaced;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 use Yii\Model\AbstractModel;
-use Yii\Model\Tests\TestSupport\Model\Model;
-use Yii\Model\Tests\TestSupport\Model\PropertyType;
+use Yii\Model\Tests\Support\Model\Model;
+use Yii\Model\Tests\Support\Model\Nested;
+use Yii\Model\Tests\Support\Model\PropertyType;
 
-require __DIR__ . '/TestSupport/Model/NonNamespaced.php';
+require __DIR__ . '/Support/Model/NonNamespaced.php';
 
 /**
  * @psalm-suppress PropertyNotSetInConstructor
@@ -62,7 +63,7 @@ final class ModelTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
-            'Undefined property: "Yii\Model\Tests\TestSupport\Model\PropertyType::noExist".'
+            'Undefined property: "Yii\Model\Tests\Support\Model\PropertyType::noExist".'
         );
 
         $model->getAttributeValue('noExist');
@@ -90,6 +91,13 @@ final class ModelTest extends TestCase
         $model = new NonNamespaced();
 
         $this->assertSame('NonNamespaced', $model->getFormName());
+    }
+
+    public function testGetNestedValue(): void
+    {
+        $model = new Nested();
+
+        $this->assertSame('Write your id or email.', $model->getHint('user.login'));
     }
 
     public function testHas(): void

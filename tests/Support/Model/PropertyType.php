@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yii\Model\Tests\TestSupport\Model;
+namespace Yii\Model\Tests\Support\Model;
 
 use Yii\Model\AbstractModel;
 
