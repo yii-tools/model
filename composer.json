@@ -1,10 +1,10 @@
 {
     "name": "yii-tools/model",
     "type": "library",
-    "description": "Filament model for Yii 3",
+    "description": "Model for Yii 3",
     "keywords": [
         "yii",
-        "filament",
+        "awesome",
         "model"
     ],
     "license": "mit",
