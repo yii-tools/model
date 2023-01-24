@@ -186,11 +186,25 @@ abstract class AbstractModel implements ModelInterface
      */
     private function getNested(string $attribute): array
     {
+        $nested = '';
+
         if (!str_contains($attribute, '.')) {
             return [$attribute, null];
         }
 
-        [$attribute, $nested] = explode('.', $attribute, 2);
+        $attributesPropertys = explode('.', $attribute, 2);
+
+        if (count($attributesPropertys) === 2) {
+            [$attribute, $nested] = $attributesPropertys;
+        } elseif (count($attributesPropertys) === 1) {
+            /** @psalm-var string $attribute */
+            $attribute = $attributesPropertys;
+        }
+
+        if (isset($attributesPropertys[1])) {
+            $nested = $attributesPropertys[1];
+        }
+
         $attributeNested = $this->modelTypes->getType($attribute);
 
         if (!is_subclass_of($attributeNested, self::class)) {
