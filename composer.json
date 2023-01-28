@@ -1,11 +1,12 @@
 {
     "name": "yii-tools/model",
     "type": "library",
-    "description": "Model for Yii 3",
+    "description": "Awesome Model for YiiFramework v.3.0.",
     "keywords": [
-        "yii",
+        "yii-tools",
         "awesome",
-        "model"
+        "model",
+        "yii3"
     ],
     "license": "mit",
     "minimum-stability": "dev",
