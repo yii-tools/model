@@ -31,32 +31,32 @@ final class ModelTest extends TestCase
     {
         $model = new PropertyType();
 
-        $model->setValue('array', [1, 2]);
+        $model->setAttributeValue('array', [1, 2]);
 
         $this->assertIsArray($model->getAttributeValue('array'));
         $this->assertSame([1, 2], $model->getAttributeValue('array'));
 
-        $model->setValue('bool', true);
+        $model->setAttributeValue('bool', true);
 
         $this->assertIsBool($model->getAttributeValue('bool'));
         $this->assertSame(true, $model->getAttributeValue('bool'));
 
-        $model->setValue('float', 1.2023);
+        $model->setAttributeValue('float', 1.2023);
 
         $this->assertIsFloat($model->getAttributeValue('float'));
         $this->assertSame(1.2023, $model->getAttributeValue('float'));
 
-        $model->setValue('int', 1);
+        $model->setAttributeValue('int', 1);
 
         $this->assertIsInt($model->getAttributeValue('int'));
         $this->assertSame(1, $model->getAttributeValue('int'));
 
-        $model->setValue('object', new stdClass());
+        $model->setAttributeValue('object', new stdClass());
 
         $this->assertIsObject($model->getAttributeValue('object'));
         $this->assertInstanceOf(stdClass::class, $model->getAttributeValue('object'));
 
-        $model->setValue('string', 'samdark');
+        $model->setAttributeValue('string', 'samdark');
 
         $this->assertIsString($model->getAttributeValue('string'));
         $this->assertSame('samdark', $model->getAttributeValue('string'));
@@ -165,8 +165,8 @@ final class ModelTest extends TestCase
     public function testSetValue(): void
     {
         $model = new Model();
-        $model->setValue('login', 'test');
-        $model->setValue('password', 'test');
+        $model->setAttributeValue('login', 'test');
+        $model->setAttributeValue('password', 'test');
 
         $this->assertSame('test', $model->getAttributeValue('login'));
         $this->assertSame('test', $model->getAttributeValue('password'));
@@ -176,8 +176,8 @@ final class ModelTest extends TestCase
     {
         $model = new PropertyType();
 
-        // setValue attributes with array and to camel case disabled.
-        $model->setValues(
+        // setAttributeValue attributes with array and to camel case disabled.
+        $model->setAttributesValues(
             [
                 'array' => [],
                 'bool' => false,
@@ -195,8 +195,8 @@ final class ModelTest extends TestCase
         $this->assertIsObject($model->getAttributeValue('object'));
         $this->assertIsString($model->getAttributeValue('string'));
 
-        // setValue attributes with array and to camel case enabled.
-        $model->setValues(
+        // setAttributeValue attributes with array and to camel case enabled.
+        $model->setAttributesValues(
             [
                 'array' => [],
                 'bool' => 'false',
@@ -222,6 +222,6 @@ final class ModelTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Attribute "noExist" does not exist');
 
-        $model->setValues(['noExist' => []]);
+        $model->setAttributesValues(['noExist' => []]);
     }
 }

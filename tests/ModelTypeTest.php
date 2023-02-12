@@ -56,7 +56,7 @@ final class ModelTypeTest extends TestCase
                 return 'joe doe';
             }
         };
-        $model->setValue('string', $objectStringable);
+        $model->setAttributeValue('string', $objectStringable);
 
         $this->assertSame('joe doe', $model->getAttributeValue('string'));
     }
@@ -66,37 +66,37 @@ final class ModelTypeTest extends TestCase
         $model = new PropertyType();
 
         // value is array
-        $model->setValue('array', []);
+        $model->setAttributeValue('array', []);
 
         $this->assertSame([], $model->getAttributeValue('array'));
 
         // value is string
-        $model->setValue('string', 'string');
+        $model->setAttributeValue('string', 'string');
 
         $this->assertSame('string', $model->getAttributeValue('string'));
 
         // value is int
-        $model->setvalue('int', 1);
+        $model->setAttributeValue('int', 1);
 
         $this->assertSame(1, $model->getAttributeValue('int'));
 
         // value is bool
-        $model->setValue('bool', true);
+        $model->setAttributeValue('bool', true);
 
         $this->assertSame(true, $model->getAttributeValue('bool'));
 
         // value is null
-        $model->setValue('object', null);
+        $model->setAttributeValue('object', null);
 
         $this->assertNull($model->getAttributeValue('object'));
 
         // value is null
-        $model->setValue('nullable', null);
+        $model->setAttributeValue('nullable', null);
 
         $this->assertNull($model->getAttributeValue('nullable'));
 
         // value is int
-        $model->setValue('nullable', 1);
+        $model->setAttributeValue('nullable', 1);
 
         $this->assertSame(1, $model->getAttributeValue('nullable'));
     }
@@ -108,6 +108,6 @@ final class ModelTypeTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The value is not of type "string".');
 
-        $model->setValue('string', []);
+        $model->setAttributeValue('string', []);
     }
 }
