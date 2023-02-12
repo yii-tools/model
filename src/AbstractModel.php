@@ -116,13 +116,13 @@ abstract class AbstractModel implements ModelInterface
         };
 
         foreach ($this->data as $name => $value) {
-            $this->setValue($name, $value);
+            $this->setAttributeValue($name, $value);
         }
 
         return $this->data !== [];
     }
 
-    public function setValue(string $name, mixed $value): void
+    public function setAttributeValue(string $name, mixed $value): void
     {
         [$realName] = $this->getNested($name);
 
@@ -132,14 +132,14 @@ abstract class AbstractModel implements ModelInterface
         $this->writeProperty($name, $valueTypeCast);
     }
 
-    public function setValues(array $data): void
+    public function setAttributesValues(array $data): void
     {
         /** @psalm-var mixed $value */
         foreach ($data as $name => $value) {
             $name = $this->getInflector()->toCamelCase($name);
 
             if ($this->has($name)) {
-                $this->setValue($name, $value);
+                $this->setAttributeValue($name, $value);
             } else {
                 throw new InvalidArgumentException(sprintf('Attribute "%s" does not exist', $name));
             }
@@ -248,7 +248,7 @@ abstract class AbstractModel implements ModelInterface
         $setter = static function (ModelInterface $class, string $attribute, mixed $value, string|null $nested): void {
             match ($nested) {
                 null => $class->$attribute = $value,
-                default => $class->$attribute->setValue($nested, $value),
+                default => $class->$attribute->setAttributeValue($nested, $value),
             };
         };
 

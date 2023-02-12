@@ -38,7 +38,7 @@ final class ModelNestedTest extends TestCase
     public function testgetAttributeValue(): void
     {
         $model = new Nested();
-        $model->setValue('user.login', 'admin');
+        $model->setAttributeValue('user.login', 'admin');
 
         $this->assertSame('admin', $model->getAttributeValue('user.login'));
     }

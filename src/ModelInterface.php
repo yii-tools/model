@@ -58,7 +58,7 @@ interface ModelInterface
      * @param string $name The attribute to set
      * @param mixed $value The value to set.
      */
-    public function setValue(string $name, mixed $value): void;
+    public function setAttributeValue(string $name, mixed $value): void;
 
     /**
      * Set values for attributes.
@@ -67,7 +67,7 @@ interface ModelInterface
      *
      * @psalm-param array<string, mixed> $data
      */
-    public function setValues(array $data): void;
+    public function setAttributesValues(array $data): void;
 
     /**
      * Returns type for attributes of the model instance.
